@@ -1,1 +1,6 @@
 __pycache__/
+
+# distrubution and build dirs
+build/
+dist/
+*.egg-info/
