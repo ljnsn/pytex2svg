@@ -1,0 +1,91 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+import sys
+
+import matplotlib.pyplot as plt
+
+
+def main():
+    # matplotlib: force computer modern font set
+    plt.rc("mathtext", fontset="cm")
+
+    parser = argparse.ArgumentParser(
+        description="converts a TeX string to an SVG file",
+        epilog="""Example:\n
+        pytex2svg "\\log_{2}10 \\approx 3.322" -o whybinary.svg
+        """
+    )
+    parser.add_argument(
+        "input",
+        type=str,
+        help="""
+        The TeX equation or file to be converted to svg, defaults to stdin
+        """,
+        nargs="?",
+        default=sys.stdin
+    )
+    parser.add_argument(
+        "-o", "--outfile",
+        type=str,
+        help="""
+        Path or name of the output file, defaults to "equation.svg". If more
+         than one equation is provided, the output files are numbered.
+        """,
+        default="equation"
+    )
+    parser.add_argument(
+        "-v", "--verbose",
+        action="count",
+        help="Enable verbose output"
+    )
+
+    args = parser.parse_args()
+
+    # if input is not provided, read stdin
+    if not isinstance(args.input, str):
+        args.input = args.input.read().strip()
+
+    # if input is a file, read in each line as equation
+    if os.path.isfile(args.input):
+        with open(args.input, "r") as f:
+            args.input = [line.strip() for line in f]
+    # if input is string, make a list
+    equations = ([args.input] if not isinstance(args.input, list)
+                 else args.input)
+
+    # remove extension to append numbering
+    outfile = (args.outfile[:-4] if args.outfile[-4:] == ".svg"
+               else args.outfile)
+    # print each equation to separate file, numbering if necessary
+    for i, equation in enumerate(equations):
+        outfile_ = (fr"{outfile}{i + 1}.svg" if len(equations) > 1
+                    else fr"{outfile}.svg")
+        try:
+            tex2svg(equation, outfile_)
+        except IOError as e:
+            raise e
+
+
+def tex2svg(equation, outfile, fontsize=12, dpi=300):
+    """Render TeX string to SVG.
+
+    Args:
+        formula (str): TeX equation.
+        fontsize (int, optional): Font size.
+        dpi (int, optional): DPI.
+
+    Returns:
+        bool: True if successful.
+    """
+
+    fig = plt.figure(figsize=(1, 1))
+    fig.text(0, 0, fr"${equation}$", fontsize=fontsize)
+    fig.savefig(outfile, dpi=dpi, transparent=True, format="svg",
+                bbox_inches="tight", pad_inches=0.1, frameon=False)
+    plt.close(fig)
+
+
+if __name__ == "__main__":
+    main()
