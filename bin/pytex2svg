@@ -3,8 +3,23 @@
 import argparse
 import os
 import sys
+import textwrap
 
 import matplotlib.pyplot as plt
+
+
+examples = """
+Examples:
+
+# from stdin
+echo "\\log_{2}10 \\approx 3.322" | pytex2svg -o whybinary.svg
+
+# as command line argument
+pytex2svg "\\log_{2}10 \\approx 3.322" -o whybinary.svg
+
+# from a file
+pytex2svg examples/integral.tex -o whybinary.svg
+"""
 
 
 def main():
@@ -13,9 +28,8 @@ def main():
 
     parser = argparse.ArgumentParser(
         description="converts a TeX string to an SVG file",
-        epilog="""Example:
-        pytex2svg "\\log_{2}10 \\approx 3.322" -o whybinary.svg
-        """
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=textwrap.dedent(examples)
     )
     parser.add_argument(
         "input",
