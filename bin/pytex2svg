@@ -21,7 +21,7 @@ def main():
         "input",
         type=str,
         help="""
-        The TeX equation or file to be converted to svg, defaults to stdin
+        The TeX equation or file to be converted to svg, defaults to stdin.
         """,
         nargs="?",
         default=sys.stdin
@@ -72,12 +72,10 @@ def tex2svg(equation, outfile, fontsize=12, dpi=300):
     """Render TeX string to SVG.
 
     Args:
-        formula (str): TeX equation.
+        equation (str): TeX equation.
+        outfile (str): Output location.
         fontsize (int, optional): Font size.
         dpi (int, optional): DPI.
-
-    Returns:
-        bool: True if successful.
     """
 
     fig = plt.figure(figsize=(1, 1))
