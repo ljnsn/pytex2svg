@@ -9,3 +9,4 @@ TODOs:
 - [ ] Make verbose option useful
 - [ ] Provide option to output either to one file with multiple equations or multiple files with one each
 - [x] Expand on install instructions including requirements
+- [ ] Include all examples with proper formatting in epilog

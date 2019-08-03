@@ -13,7 +13,7 @@ def main():
 
     parser = argparse.ArgumentParser(
         description="converts a TeX string to an SVG file",
-        epilog="""Example:\n
+        epilog="""Example:
         pytex2svg "\\log_{2}10 \\approx 3.322" -o whybinary.svg
         """
     )
