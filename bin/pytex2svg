@@ -64,7 +64,7 @@ def main():
     # if input is a file, read in each line as equation
     if os.path.isfile(args.input):
         with open(args.input, "r") as f:
-            args.input = [line.strip() for line in f]
+            args.input = [line.strip() for line in f if line.strip() != ""]
     # if input is string, make a list
     equations = ([args.input] if not isinstance(args.input, list)
                  else args.input)
