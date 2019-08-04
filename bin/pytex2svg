@@ -9,9 +9,6 @@ import textwrap
 import matplotlib.pyplot as plt
 
 
-logging.basicConfig(level=logging.INFO,
-                    format='%(asctime)s %(levelname)s %(message)s')
-
 examples = """
 Examples:
 
@@ -65,8 +62,17 @@ def main():
 
     args = set_up_args()
 
+    log_level = logging.WARNING
+    if args.verbose > 1:
+        log_level = logging.DEBUG
+    elif args.verbose > 0:
+        log_level = logging.INFO
+    logging.basicConfig(level=log_level,
+                        format='%(asctime)s %(levelname)s %(message)s')
+
     # if input is not provided, read stdin
     if not isinstance(args.input, list):
+        logging.debug("No input provided, reading stdin..")
         args.input = [args.input.read().strip()]
 
     equations = parse_equations(args.input)
@@ -89,11 +95,14 @@ def parse_equations(incoming):
     for arg in incoming:
         # if arg is a file, read in each line as equation
         if os.path.isfile(arg):
+            logging.debug(f"Argument {arg} is a file. Parsing it now..")
             with open(arg, "r") as f:
                 equations_ = [line.strip() for line in f if line.strip() != ""]
+                logging.debug(f"{arg} contains {len(equations_)} equations")
             equations.extend(equations_)
         # if arg is string, append to equations
         else:
+            logging.debug(f"Argument {arg} is an equation. Parsing it now..")
             equations.append(arg)
     return equations
 
