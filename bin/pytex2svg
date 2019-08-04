@@ -34,7 +34,7 @@ def set_up_args():
         help="""
         The TeX equation or file to be converted to svg, defaults to stdin.
         """,
-        nargs="?",
+        nargs="*",
         default=sys.stdin
     )
     parser.add_argument(
@@ -62,17 +62,10 @@ def main():
     args = set_up_args()
 
     # if input is not provided, read stdin
-    if not isinstance(args.input, str):
-        args.input = args.input.read().strip()
+    if not isinstance(args.input, list):
+        args.input = [args.input.read().strip()]
 
-    # if input is a file, read in each line as equation
-    if os.path.isfile(args.input):
-        with open(args.input, "r") as f:
-            args.input = [line.strip() for line in f if line.strip() != ""]
-    # if input is string, make a list
-    equations = ([args.input] if not isinstance(args.input, list)
-                 else args.input)
-
+    equations = parse_equations(args.input)
     # remove extension to append numbering
     outfile = (args.outfile[:-4] if args.outfile[-4:] == ".svg"
                else args.outfile)
@@ -84,6 +77,20 @@ def main():
             tex2svg(equation, outfile_)
         except IOError as e:
             raise e
+
+
+def parse_equations(incoming):
+    equations = []
+    for arg in incoming:
+        # if arg is a file, read in each line as equation
+        if os.path.isfile(arg):
+            with open(arg, "r") as f:
+                equations_ = [line.strip() for line in f if line.strip() != ""]
+            equations.extend(equations_)
+        # if arg is string, append to equations
+        else:
+            equations.append(arg)
+    return equations
 
 
 def tex2svg(equation, outfile, fontsize=12, dpi=300):
