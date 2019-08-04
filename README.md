@@ -4,22 +4,18 @@ pytex2svg
 
 A simple command line tool written in Python to convert TeX equations to SVG. Input can be read from `stdin`, provided directly as command line argument, or read from a file.
 
-
 Installation
 ---
 
 `pip install pytex2svg`
 
-
 Dependencies
 ---
 
-- `matplotlib`
-
+-   `matplotlib`
 
 Usage
 ---
-
 
 ```
 usage: pytex2svg [-h] [-o OUTFILE] [-v] [input]
