@@ -22,10 +22,7 @@ pytex2svg examples/integral.tex -o whybinary.svg
 """
 
 
-def main():
-    # matplotlib: force computer modern font set
-    plt.rc("mathtext", fontset="cm")
-
+def set_up_args():
     parser = argparse.ArgumentParser(
         description="converts a TeX string to an SVG file",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -55,7 +52,14 @@ def main():
         help="Enable verbose output"
     )
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def main():
+    # matplotlib: force computer modern font set
+    plt.rc("mathtext", fontset="cm")
+
+    args = set_up_args()
 
     # if input is not provided, read stdin
     if not isinstance(args.input, str):
