@@ -1,7 +1,7 @@
 TODOs
 ---
 
--   [ ] Properly handle multiple input files
+-   [x] Properly handle multiple input files
 -   [ ] Develop tests
 -   [ ] Expand on examples
 -   [ ] Provide command line options for `figsize` and `dpi`
