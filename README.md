@@ -1,4 +1,3 @@
-
 pytex2svg
 ===
 

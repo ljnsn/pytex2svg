@@ -1,5 +1,4 @@
-
-TODOs:
+TODOs
 ---
 
 -   [ ] Properly handle multiple input files
