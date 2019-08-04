@@ -1,6 +1,8 @@
 pytex2svg
 ===
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7249c6914c584f11b9da0c4ab75a4eda)](https://app.codacy.com/app/iuvbio/pytex2svg?utm_source=github.com&utm_medium=referral&utm_content=iuvbio/pytex2svg&utm_campaign=Badge_Grade_Settings)
+
 A simple command line tool written in Python to convert TeX equations to SVG. Input can be read from `stdin`, provided directly as command line argument, or read from a file.
 
 Installation
